@@ -1,9 +1,14 @@
 import { Component } from 'react';
 import './App.css';
+import { PostCard } from './components/PostCard';
 
 class App extends Component {
   state = {
     posts: []
+  }
+
+  componentDidMount() {
+    this.loadPosts();
   }
 
   loadPosts = async () => {
@@ -15,14 +20,8 @@ class App extends Component {
 
     const postsAndPhotos = postsJson.map((post, index) => {
       return { ...post, cover: imgJson[index].url }
-    })
-
+    });
     this.setState({ posts: postsAndPhotos });
-
-  }
-
-  componentDidMount() {
-    this.loadPosts();
   }
 
   render() {
@@ -31,13 +30,10 @@ class App extends Component {
       <section className='container'>
         <div className="App">
           {posts.map(post => (
-            <div className='post'>
-              <img src={post.cover} alt={post.title}></img>
-              <div key={post.id} className='post-content'>
-                <h1>{post.title}</h1>
-                <p>{post.body}</p>
-              </div>
-            </div>
+
+            <PostCard
+              props={post} 
+              />
           ))}
         </div>
       </section>
